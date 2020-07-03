@@ -11,7 +11,7 @@ namespace EventSystem
 		~MainWindow();
 
 		static const void InitializeGLFW();
-		static const GLFWwindow* GetMainWindow() { return m_ApplicationWindow; }
+		static GLFWwindow* GetMainWindow() { return m_ApplicationWindow; }
 
 	private:
 		static GLFWwindow* m_ApplicationWindow;
