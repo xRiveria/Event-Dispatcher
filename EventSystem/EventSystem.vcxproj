@@ -167,8 +167,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\EventSystemPrecompiledHeader.h" />
+    <ClInclude Include="Source\Events\ApplicationEvent.h" />
     <ClInclude Include="Source\Events\Event.h" />
     <ClInclude Include="Source\Events\KeyEvent.h" />
+    <ClInclude Include="Source\Events\MouseEvent.h" />
     <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\MainWindow.h" />
   </ItemGroup>
