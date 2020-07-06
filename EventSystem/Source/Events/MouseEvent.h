@@ -1,6 +1,6 @@
 #pragma once
+#include "EventSystemPrecompiledHeader.h"
 #include "Event.h"
-#include <sstream>
 
 namespace EventSystem
 {
@@ -15,16 +15,39 @@ namespace EventSystem
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "Mouse Moved Event: " << m_MouseX << m_MouseY;
-			return ss.str();
+			ss << "Mouse Moved (" << m_MouseX << ", " << m_MouseY << ")";
+			return ss.str();  //ss.str() converts from stringstream to a string itself. 
 		}
+
+		EVENT_CLASS_TYPE(MouseMoved)
+		EVENT_CLASS_CATEGORY(EventCategoryInputEvent | EventCategoryMouseEvent)
 
 	private:
 		float m_MouseX, m_MouseY;
 	};
 
+	class MouseScrolledEvent : public Event
+	{
+	public:
+		MouseScrolledEvent(float xOffset, float yOffset) : m_xOffset(xOffset), m_yOffset(yOffset) {}
+		inline float GetXOffset() const { return m_xOffset; }
+		inline float GetYOffset() const { return m_yOffset; }
 
-	class MouseButtonEvent: Event
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "Mouse Scrolled (" << m_xOffset << ", " << m_yOffset << ")";
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(MouseScrolled)
+		EVENT_CLASS_CATEGORY(EventCategoryInputEvent | EventCategoryMouseEvent)
+
+	protected:
+		float m_xOffset, m_yOffset;
+	};
+
+	class MouseButtonEvent: public Event
 	{
 	public:
 		inline int GetMouseButton() const { return m_MouseButton; }
@@ -35,8 +58,7 @@ namespace EventSystem
 		int m_MouseButton;
 	};
 
-
-	class MouseButtonPressedEvent : MouseButtonEvent
+	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(int buttonPressed) : MouseButtonEvent(buttonPressed) {}
@@ -44,15 +66,14 @@ namespace EventSystem
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "Mouse Pressed Event";
+			ss << "Mouse Pressed!";
 			return ss.str();
 		}
 		
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-
-	class MouseButtonReleasedEvent : MouseButtonEvent
+	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(int buttonReleased) : MouseButtonEvent(buttonReleased) {}
@@ -60,7 +81,7 @@ namespace EventSystem
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "Mouse Released Event";
+			ss << "Mouse Released!";
 			return ss.str();
 		}
 

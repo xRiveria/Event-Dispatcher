@@ -1,6 +1,6 @@
 #pragma once
+#include "EventSystemPrecompiledHeader.h"
 #include "Event.h"
-#include <sstream>
 
 namespace EventSystem
 {
@@ -17,13 +17,14 @@ namespace EventSystem
 
 	class KeyPressedEvent : public KeyEvent
 	{	
+	public:
 		KeyPressedEvent(int keyCode, int repeatCount) : KeyEvent(keyCode), m_TimesPressed(repeatCount) {}
 		inline int GetRepeatCount() const { return m_TimesPressed; }
 
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "Key Pressed Event: " << m_KeyCode << " Repeated For " << m_TimesPressed << " Times!";
+			ss << "Key Pressed (" << (char)m_KeyCode << ")" << ", Repeated For " << m_TimesPressed << " Times.";
 			return ss.str();
 		}
 
@@ -41,25 +42,10 @@ namespace EventSystem
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "Key Released Event: " << m_KeyCode;
+			ss << "Key Released (" << (char)m_KeyCode << ")";
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(KeyReleased);
-	};
-
-	class KeyTypedEvent : public KeyEvent
-	{
-	public:
-		KeyTypedEvent(int keyCode) : KeyEvent(keyCode) {}
-
-		std::string ToString() const override
-		{
-			std::stringstream ss; //Prints a string value.
-			ss << "Key Typed Event: " << m_KeyCode;
-			return ss.str();
-		}
-
-		EVENT_CLASS_TYPE(KeyTyped);
+		EVENT_CLASS_TYPE(KeyReleased)
 	};
 }
